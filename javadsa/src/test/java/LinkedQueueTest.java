@@ -3,23 +3,23 @@ import static org.junit.Assert.assertThrows;
 
 import org.junit.Test;
 
-import com.digiteched.javadsa.ArrayQueue;
+import com.digiteched.javadsa.LinkedQueue;
 import com.digiteched.javadsa.exceptions.FailedToDequeueFromEmptyQueueException;
 import com.digiteched.javadsa.interfaces.IQueue;
 import com.digiteched.javadsa.exceptions.FailedToDequeueFromEmptyQueueException;
 
 @SuppressWarnings("unused")
-public class ArrayQueueTest {
+public class LinkedQueueTest {
     @Test
     public void itShouldCreateAnEmptyQueue() {
-        IQueue<Integer> q = new ArrayQueue<Integer>(Integer.class);
+        IQueue<Integer> q = new LinkedQueue<Integer>();
 
         assertEquals(0, q.size());
     }
 
     @Test
     public void itShouldEnqueueAFirstItem() {
-        IQueue<Integer> q = new ArrayQueue<>(Integer.class);
+        IQueue<Integer> q = new LinkedQueue<>();
 
         Integer firstValue = 55;
 
@@ -38,7 +38,7 @@ public class ArrayQueueTest {
     public void itShouldExpandAsNeeded() {
         final int INITIAL_SIZE = 3;
 
-        IQueue<Integer> q = new ArrayQueue<>(Integer.class, INITIAL_SIZE);
+        IQueue<Integer> q = new LinkedQueue<>();
 
         for (int i = 0; i < INITIAL_SIZE; i++) {
             q.enqueue(i);
@@ -50,31 +50,10 @@ public class ArrayQueueTest {
     }
 
     @Test
-    public void itShouldRollOverTheStartPointAsNeeded() {
-        final int INITIAL_SIZE = 3;
-
-        IQueue<Integer> q = new ArrayQueue<>(Integer.class, INITIAL_SIZE);
-
-        for (int i = 0; i < INITIAL_SIZE; i++) {
-            q.enqueue(i);
-        }
-
-        for (int i = 0; i < INITIAL_SIZE; i++) {
-            q.dequeue();
-
-            q.enqueue(i + INITIAL_SIZE);
-        }
-
-        q.enqueue(77);
-
-        assertEquals(4, q.size());
-    }
-
-    @Test
     public void itShouldPopTilEmpty() {
         final int INITIAL_SIZE = 3;
 
-        IQueue<Integer> q = new ArrayQueue<>(Integer.class, INITIAL_SIZE);
+        IQueue<Integer> q = new LinkedQueue<>();
 
         for (int i = 0; i < INITIAL_SIZE; i++) {
             q.enqueue(i);
@@ -89,11 +68,10 @@ public class ArrayQueueTest {
 
     @Test
     public void itShouldThrowWhenDequeueingFromEmptyQueue() {
-        IQueue<String> q = new ArrayQueue<String>(String.class);
+        IQueue<String> q = new LinkedQueue<String>();
 
         assertThrows(FailedToDequeueFromEmptyQueueException.class, () -> {
             q.dequeue();
         });
-
     }
 }
