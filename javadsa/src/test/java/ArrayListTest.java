@@ -56,6 +56,8 @@ public class ArrayListTest {
         }
 
         assertEquals(NUMBER_OF_ITEMS, list.size());
+
+        assertEquals(String.valueOf(NUMBER_OF_ITEMS - 1), list.peek());
     }
 
     @Test

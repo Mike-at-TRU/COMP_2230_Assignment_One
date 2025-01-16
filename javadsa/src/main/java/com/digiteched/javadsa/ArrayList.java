@@ -31,7 +31,7 @@ public class ArrayList<T> implements IList<T>, IStack<T>, IQueue<T> {
 
     @Override
     public void set(int index, T newElement) {
-        items[(index + head) % items.length] = newElement;
+        throw new UnsupportedOperationException();
     }
 
     @Override
@@ -77,37 +77,27 @@ public class ArrayList<T> implements IList<T>, IStack<T>, IQueue<T> {
 
     @Override
     public T remove(int index) {
-        T elementToRemove = items[(index + head) % items.length];
+        throw new UnsupportedOperationException();
+        /**
+         * if we index is less than half way through, we shift elements left of the
+         * removal
+         * to the right
+         */
 
-        // we are removing from the interior
-        // point to the right
-        if (index < count / 2) {
-            // if we are less than half way through, we shift elements left of the removal
-            // to the right
-            for (int k = index; k > 0; k--) {
-                items[(head + k) % items.length] = items[(head + k - 1) % items.length];
-            }
+        // else, shift items right of the removal point to the left
 
-            head = (head = head + 1) % items.length;
-        } else {
-            // shift items right of the removal point to the left
-            for (int k = index; k < count - 1; k++) {
-                items[(head + k) % items.length] = items[(head + k + 1) % items.length];
+        // no need to shift the head.
 
-                // no need to shift the head.
-            }
-        }
+        // remember to decrement count
 
-        count--;
-
-        return elementToRemove;
+        // and return the removed element
     }
 
     @Override
     public T get(int index) {
         // TODO throw OutOfBoundsException if index is invalid
 
-        return items[(head + index) % items.length];
+        throw new UnsupportedOperationException();
     }
 
     @Override
@@ -144,9 +134,12 @@ public class ArrayList<T> implements IList<T>, IStack<T>, IQueue<T> {
 
     @Override
     public T pop() {
-        // TODO prevent popping from an empty array
+        throw new UnsupportedOperationException();
+    }
 
-        return remove((head + count - 1) % items.length);
+    @Override
+    public T peek() {
+        throw new UnsupportedOperationException();
     }
 
     public boolean isEmpty() {
