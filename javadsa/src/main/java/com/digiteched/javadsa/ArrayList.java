@@ -31,7 +31,11 @@ public class ArrayList<T> implements IList<T>, IStack<T>, IQueue<T> {
 
     @Override
     public void set(int index, T newElement) {
-        throw new UnsupportedOperationException();
+        while (index > items.length) {
+            resize();
+        }
+        items[(head + index) % items.length] = newElement;
+        count++;
     }
 
     @Override
@@ -77,27 +81,31 @@ public class ArrayList<T> implements IList<T>, IStack<T>, IQueue<T> {
 
     @Override
     public T remove(int index) {
-        throw new UnsupportedOperationException();
+      
         /**
          * if we index is less than half way through, we shift elements left of the
          * removal
          * to the right
          */
+       
+        T out = items[(head + index % items.length)];
+        
+        count--;
 
-        // else, shift items right of the removal point to the left
+ 
 
-        // no need to shift the head.
-
-        // remember to decrement count
-
-        // and return the removed element
+  
+       
+        //return the removed element
+        return out;
     }
 
     @Override
     public T get(int index) {
-        // TODO throw OutOfBoundsException if index is invalid
+        if(index > count)
+        throw new IndexOutOfBoundsException();
 
-        throw new UnsupportedOperationException();
+        return items[(index + head) % items.length];
     }
 
     @Override
@@ -134,12 +142,15 @@ public class ArrayList<T> implements IList<T>, IStack<T>, IQueue<T> {
 
     @Override
     public T pop() {
-        throw new UnsupportedOperationException();
+        count--;
+       T out =items [tail()];
+       items[tail()] = null;
+       return out;
     }
 
     @Override
     public T peek() {
-        throw new UnsupportedOperationException();
+        return items[tail()-1];
     }
 
     public boolean isEmpty() {
