@@ -90,23 +90,25 @@ public class ArrayList<T> implements IList<T>, IStack<T>, IQueue<T> {
 
         T out = items[getHiddenIndex(index)];
 
-        if (index < count/2){
-            for(int i = getHiddenIndex(index); i > getHiddenIndex(index); i--){
-                items[getHiddenIndex(i)] = items[getHiddenIndex(i-1)];
+        if (index < count / 2) {
+            // shift right
+
+            for (int i = index; i > 0; i--) {
+                items[getHiddenIndex(i)] = items[getHiddenIndex(i - 1)];
             }
+
             items[head] = null;
             head++;
-        }
-        else{
-            for (int i = 0; i < getHiddenIndex(index); i++){
-                items[getHiddenIndex(i)] = items[getHiddenIndex(i+1)];
+
+        } else {
+            // shift left
+            for (int i = index; i < count; i++) {
+                items[getHiddenIndex(i)] = items[getHiddenIndex(i + 1)];
             }
 
         }
 
         count--;
-
-        
 
         // return the removed element
         return out;
