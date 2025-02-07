@@ -64,14 +64,14 @@ public class ArrayList<T> implements IList<T>, IStack<T>, IQueue<T> {
             for (int k = 0; k < index - 1; k++) {
                 // note that there is always at least 1 vacant location to shift into, as we
                 // call resize if need be
-                items[getHiddenIndex(k)] = items[getHiddenIndex(k+1)];
+                items[getHiddenIndex(k)] = items[getHiddenIndex(k + 1)];
             }
         } else {
             // if the insertion point is in the middle or right half, shift elements at
             // higher indices right
             // no need to shift head when shifting to the right
             for (int k = count; k >= index; k--) {
-                items[getHiddenIndex(k)] = items[getHiddenIndex(k-1)];
+                items[getHiddenIndex(k)] = items[getHiddenIndex(k - 1)];
             }
         }
 
@@ -81,29 +81,41 @@ public class ArrayList<T> implements IList<T>, IStack<T>, IQueue<T> {
 
     @Override
     public T remove(int index) {
-      
+
         /**
          * if we index is less than half way through, we shift elements left of the
          * removal
          * to the right
          */
-       
+
         T out = items[getHiddenIndex(index)];
-        
+
+        if (index < count/2){
+            for(int i = getHiddenIndex(index); i > getHiddenIndex(index); i--){
+                items[getHiddenIndex(i)] = items[getHiddenIndex(i-1)];
+            }
+            items[head] = null;
+            head++;
+        }
+        else{
+            for (int i = 0; i < getHiddenIndex(index); i++){
+                items[getHiddenIndex(i)] = items[getHiddenIndex(i+1)];
+            }
+
+        }
+
         count--;
 
- 
+        
 
-  
-       
-        //return the removed element
+        // return the removed element
         return out;
     }
 
     @Override
     public T get(int index) {
-        if(index > count)
-        throw new IndexOutOfBoundsException();
+        if (index > count)
+            throw new IndexOutOfBoundsException();
 
         return items[getHiddenIndex(index)];
     }
@@ -128,7 +140,7 @@ public class ArrayList<T> implements IList<T>, IStack<T>, IQueue<T> {
 
         items[head] = null;
 
-        head = (head + 1) % items.length; //didn't use helper method; don't think get hidden index one makes sense
+        head = (head + 1) % items.length; // didn't use helper method; don't think get hidden index one makes sense
 
         count--;
 
@@ -143,14 +155,14 @@ public class ArrayList<T> implements IList<T>, IStack<T>, IQueue<T> {
     @Override
     public T pop() {
         count--;
-       T out =items [tail()];
-       items[tail()] = null;
-       return out;
+        T out = items[tail()];
+        items[tail()] = null;
+        return out;
     }
 
     @Override
     public T peek() {
-        return items[tail()-1];
+        return items[tail() - 1];
     }
 
     public boolean isEmpty() {
@@ -166,7 +178,7 @@ public class ArrayList<T> implements IList<T>, IStack<T>, IQueue<T> {
          */
         for (int i = 0; i < count; i++) {
             expanded[i] = items[head];
-            head = (head + 1) % items.length; //didn't use helper method; don't think get hidden index one makes sense
+            head = (head + 1) % items.length; // didn't use helper method; don't think get hidden index one makes sense
         }
 
         head = 0;
@@ -177,9 +189,8 @@ public class ArrayList<T> implements IList<T>, IStack<T>, IQueue<T> {
         return getHiddenIndex(count);
     }
 
-    private int getHiddenIndex(int index){
+    private int getHiddenIndex(int index) {
         return (index + head) % items.length;
     }
-
 
 }
