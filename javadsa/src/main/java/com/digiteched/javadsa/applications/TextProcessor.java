@@ -1,7 +1,6 @@
 package com.digiteched.javadsa.applications;
 
 import com.digiteched.javadsa.ArrayList;
-import com.digiteched.javadsa.interfaces.IQueue;
 import com.digiteched.javadsa.interfaces.IStack;
 
 public class TextProcessor {
